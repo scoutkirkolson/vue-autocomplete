@@ -10,20 +10,22 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
         filename: 'vue-autocomplete.js',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
+                options: {   
+                }
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)(\?.*)?$/,
                 use: [
                     'url-loader?name=assets/[name].[ext]',
                 ]
-            }
+            },
         ]
 
     },
@@ -52,7 +54,9 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new UglifyJsPlugin(),
+        new UglifyJsPlugin({
+            sourceMap:true
+        }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
         })
