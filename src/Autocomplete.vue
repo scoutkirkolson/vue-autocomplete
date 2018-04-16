@@ -43,12 +43,12 @@
                 <template v-if="!hasError">
                     <slot name="firstResult"></slot>
                     <li
-                            v-for           = "(result, key) in results"
-                            :key            = "key"
-                            @click.prevent  = "select(result)"
-                            class           = "sko-aut-results-item"
-                            :class          = "{'sko-aut-selected' : isSelected(key) }"
-                            v-html          = "formatDisplay(result)">
+                        v-for           = "(result, key) in results"
+                        :key            = "key"
+                        @click.prevent  = "select(result)"
+                        class           = "sko-aut-results-item"
+                        :class          = "{'sko-aut-selected' : isSelected(key) }"
+                        v-html          = "formatDisplay(result)">
                     </li>
                     <slot name="lastResult"></slot>
                 </template>
