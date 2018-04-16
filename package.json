@@ -66,6 +66,6 @@
   },
   "files": [
     "src/Autocomplete.vue",
-    "dist/vue-autocomplete.js",
+    "dist/vue-autocomplete.js"
   ]
 }
