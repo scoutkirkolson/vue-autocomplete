@@ -2,8 +2,8 @@
     <div class="sko-aut">
         <div class="sko-aut-box" :class="[containerClass, {'autocomplete__searching' : showResults}]">
             <span v-if="searchButton">
-                <img v-if="!isLoading" class="sko-aut-icon" src="assets/images/search.svg">
-                <img v-else class="sko-aut-icon sko-aut-animate-spin" src="assets/images/loading.svg">
+                <img v-if="!isLoading" class="sko-aut-icon" src="./assets/search.svg" />
+                <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg" />
             </span>
 
             <div class="sko-aut-inputs">
@@ -30,7 +30,7 @@
             <!-- clearButtonIcon -->
             <span v-show="clearButton && !disableInput && !isEmpty && !isLoading && !hasError" class="sko-aut-icon sko-aut-clear" @click="clear">
                 <span v-if="clearButtonIcon" :class="clearButtonIcon"></span>
-                <img v-else src="assets/close.svg">
+                <img v-else src="./assets/close.svg" />
             </span>
         </div>
 
@@ -64,6 +64,8 @@
 
 <script type="text/babel">
     import debounce from 'lodash/debounce'
+    import search from './assets/search.png'
+    
     export default {
         props: {
             /**

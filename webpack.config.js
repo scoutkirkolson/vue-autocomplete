@@ -1,12 +1,15 @@
 var path = require('path')
 var webpack = require('webpack')
+var urloader = require('url-loader')
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 
 module.exports = {
     entry: './src/Autocomplete.vue',
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: 'build.js',
+        filename: 'vue-autocomplete.js',
         libraryTarget: 'umd'
     },
     module: {
@@ -14,28 +17,20 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                options: {
-                    loaders: {
-                    }
-                }
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
+                test: /\.(png|jpg|jpeg|gif|svg)(\?.*)?$/,
+                use: [
+                    'url-loader?name=assets/[name].[ext]',
+                ]
             }
         ]
+
     },
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
+            , 'assets': path.resolve(__dirname, '../src/assets')
         }
     },
     devServer: {
@@ -57,12 +52,7 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false
-            }
-        }),
+        new UglifyJsPlugin(),
         new webpack.LoaderOptionsPlugin({
             minimize: true
         })
