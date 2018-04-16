@@ -1,6 +1,6 @@
 {
   "name": "vue-autocomplete",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue Autocomplete component",
   "main": "dist/vue-autocomplete.min.js",
   "scripts": {
@@ -59,6 +59,7 @@
     "vue-template-compiler": "^2.5.16"
   },
   "files": [
+    "src/Autocomplete.vue",
     "dist/vue-autocomplete.min.js",
     "dist/vue-autocomplete.min.js.map"
   ]
