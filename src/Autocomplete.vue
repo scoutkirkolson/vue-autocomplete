@@ -535,7 +535,8 @@
             this.display            = this.initialDisplay
             this.selectedDisplay    = this.initialDisplay
 
-            this.position = $(this.$el).position();
+            //this.position = $(this.$el).position();
+            this.position = this.$el.getBoundingClientRect();
         }
     }
 </script>
