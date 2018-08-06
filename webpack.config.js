@@ -3,13 +3,12 @@ var webpack = require('webpack')
 var urloader = require('url-loader')
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-
 module.exports = {
-    entry: './src/Autocomplete.vue',
+    entry: './src/sko-autocomplete.vue',
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: 'vue-autocomplete.js',
+        filename: 'sko-autocomplete.js',
         libraryTarget: 'umd',
     },
     module: {

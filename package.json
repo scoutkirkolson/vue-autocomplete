@@ -1,12 +1,22 @@
 {
-  "name": "vue-autocomplete",
-  "version": "0.1.2",
-  "description": "Vue Autocomplete component",
-  "main": "dist/vue-autocomplete.js",
+  "name": "sko-autocomplete",
+  "version": "0.0.1",
+  "description": "Vue2 Autocomplete component",
+  "author": "Kirk Olson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KirkOlson/vue-autocomplete/issues"
+  },
+  "homepage": "https://github.com/KirkOlson/vue-autocomplete#readme",
+  "main": "dist/sko-autocomplete.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules",
     "devpoi": "poi build --format cjs --dist dist; poi build --format umd --dist dist/umd",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules",
+    "watch-poll": "yarn watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development webpack --hot --progress --hide-modules ",
+    "prod": "yarn production",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,12 +27,6 @@
     "vue",
     "component"
   ],
-  "author": "Kirk Olson",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/KirkOlson/vue-autocomplete/issues"
-  },
-  "homepage": "https://github.com/KirkOlson/vue-autocomplete#readme",
   "devDependencies": {
     "cross-env": "^5.0.5",
     "file-loader": "^1.1.11",
@@ -36,9 +40,13 @@
     "webpack": "^3.5.5",
     "webpack-cli": "^1.5.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "es6lib": "git+ssh://git@github.com/scoutkirkolson/es6lib.git",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.0"
+  },
   "files": [
-    "dist/vue-autocomplete.js",
-    "dist/vue-autocomplete.js.map"
+    "dist/sko-autocomplete.js",
+    "dist/sko-autocomplete.js.map"
   ]
 }

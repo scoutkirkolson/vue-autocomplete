@@ -1,18 +1,26 @@
 <template>
     <div class="sko-aut">
-        <div class="sko-aut-box" :class="[containerClass, {'autocomplete__searching' : showResults}]">
+        <div
+            class   = "sko-aut-box"
+            :class  = "[
+                containerClass
+                , disableInput ? containerDisableClass : ''
+                , showResults ? 'sko-aut-searching' : ''
+            ]"
+        >
             <span v-if="searchButton">
-                <img v-if="!isLoading" class="sko-aut-icon" src="./assets/search.svg" />
-                <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg" />
+                <img v-if="!isLoading" class="sko-aut-icon" src="./assets/search.svg">
+                <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg">
             </span>
 
             <div class="sko-aut-inputs">
                 <input
-                    :class          = "inputClass"
+                    :class          = "[inputClass, {inputDisableClass: disableInput}]"
                     v-model         = "display"
                     :type           = "inputType"
                     :placeholder    = "placeholder"
                     :disabled       = "disableInput"
+                    :required       = "required"
                     @click          = "search"
                     @input          = "search"
                     @keydown.enter  = "enter"
@@ -30,11 +38,11 @@
             <!-- clearButtonIcon -->
             <span v-show="clearButton && !disableInput && !isEmpty && !isLoading && !hasError" class="sko-aut-icon sko-aut-clear" @click="clear">
                 <span v-if="clearButtonIcon" :class="clearButtonIcon"></span>
-                <img v-else src="./assets/close.svg" />
+                <img v-else src="./assets/close.svg">
             </span>
         </div>
 
-        <ul v-show="showResults" class="sko-aut-results" :style="listStyle">
+        <ul v-show="showResults" :class="['sko-aut-results', resultsClass]" :style="listStyle">
             <slot name="results">
                 <!-- error -->
                 <li v-if="hasError" class="sko-aut-results-item autocomplete__results__item--error">{{ error }}</li>
@@ -64,8 +72,6 @@
 
 <script type="text/babel">
     import debounce from 'lodash/debounce'
-    import search from './assets/search.png'
-    
     export default {
         props: {
             /**
@@ -78,24 +84,35 @@
                 type: [String, Function, Array, Object],
                 required: true
             },
+
+            /**
+             * Source params
+             */
+            sourceparams: {
+                type: [String, Function, Array, Object],
+            },
+
             /**
              * Input placeholder
              */
             placeholder: {
                 default: 'Search'
             },
+
             /**
              * Preset starting value
              */
             initialValue: {
                 type: [String, Number]
             },
+
             /**
              * Preset starting display value
              */
             initialDisplay: {
                 type: String
             },
+
             /**
              * CSS class for the surrounding input div
              */
@@ -103,11 +120,26 @@
                 type: [String, Object]
             },
             /**
+             * CSS class for the surrounding input div when disabled
+             */
+            containerDisableClass: {
+                type: [String, Object]
+            },
+
+            /**
              * CSS class for the input
              */
             inputClass: {
                 type: [String, Object]
             },
+
+            /**
+             * CSS class for the input when disabled
+             */
+            inputDisableClass: {
+                type: [String, Object]
+            },
+
             /**
              * type of the input
              */
@@ -115,11 +147,21 @@
                 default: 'text',
                 type: String
             },
+
             /**
              * To disable the input
              */
             disableInput: {
-                type: Boolean
+                default : false
+                , type  : Boolean
+            },
+
+            /**
+             * Copy display value to value when nothing is selected
+             */
+            copyDisplay: {
+                default : false
+                , type  : Boolean
             },
             /**
              * name property of the input holding the selected value
@@ -127,18 +169,21 @@
             name: {
                 type: String
             },
+
             /**
              * name property of the input holding the selected display
              */
             nameDisplay: {
                 type: String
             },
+
             /**
              * api - property of results array
              */
             resultsProperty: {
                 type: String
             },
+
             /**
              * Results property used as the value
              */
@@ -146,12 +191,29 @@
                 type: String,
                 default: 'id'
             },
+
             /**
              * Results property used as the display
              */
             resultsDisplay: {
                 type: [String, Function],
                 default: 'name'
+            },
+
+            /**
+             * CSS class for the results list
+             */
+            resultsClass: {
+                default : ''
+                , type  : [String, Object]
+            },
+
+            /**
+             * Minimum input length to start searching
+             */
+            minSearchLength: {
+                type: Number,
+                default: 1
             },
 
             /**
@@ -167,6 +229,14 @@
              */
             requestHeaders: {
                 type: Object
+            },
+
+            /**
+             * Optional search button
+             */
+            required: {
+                type: Boolean,
+                default: false
             },
 
             /**
@@ -211,9 +281,11 @@
             'initialDisplay'    (newValue,oldValue) {
                 let that    = this;
 
-                if (!that.display) {
+                if (!that.display
+                ||  !that.value) {
                     that.display    = newValue;
                 }
+
             }
         },
         computed: {
@@ -262,19 +334,21 @@
                 switch (true) {
                     case typeof this.source === 'string':
                         // No resource search with no input
-                        if (!this.display || this.display.length < 1) {
+                        if (!this.display || this.display.length < this.minSearchLength ) {
                             return
                         }
-
                         return this.resourceSearch(this.source + this.display)
+
                     case typeof this.source === 'function':
                         // No resource search with no input
-                        if (!this.display || this.display.length < 1) {
+                        if (!this.display || this.display.length < this.minSearchLength ) {
                             return
                         }
-                        return this.resourceSearch(this.source(this.display))
+                        return this.resourceSearch(this.source(this.display, this.sourceparams))
+
                     case Array.isArray(this.source):
                         return this.arrayLikeSearch()
+
                     default:
                         throw new TypeError()
                 }
@@ -350,7 +424,7 @@
              * @return {Array}
              */
             setResults (response) {
-                if (this.resultsProperty && response[this.resultsProperty]) {
+                if (this.resultsProperty && response && response[this.resultsProperty]) {
                     return response[this.resultsProperty]
                 }
                 if (Array.isArray(response)) {
@@ -388,12 +462,12 @@
                 this.value = (this.resultsValue && obj[this.resultsValue]) ? obj[this.resultsValue] : obj.id
                 this.display = this.formatDisplay(obj)
                 this.selectedDisplay = this.display
+                this.$emit('input', this.value)
                 this.$emit('selected', {
                     value: this.value,
                     display: this.display,
                     selectedObject: obj
                 })
-                this.$emit('input', this.value)
                 this.close()
             },
 
@@ -481,26 +555,33 @@
                 this.value = null
                 this.results = null
                 this.error = null
+                this.$emit('input', null)
                 this.$emit('clear')
             },
 
             /**
-             * Close the results list. If nothing was selected clear the search
+             * Close the results list.
              */
             close () {
                 if (!this.value || !this.selectedDisplay) {
                     //this.clear()
-                    this.value=null;
+                    this.value  = this.copyDisplay ? this.display : null;
                     this.$emit('nothing-selected', this.display)
                 }
+
                 if (this.selectedDisplay !== this.display && this.value) {
-                    this.display = this.selectedDisplay
+                    this.value  = this.copyDisplay ? this.display : null;;
                 }
+
+                //if (this.selectedDisplay !== this.display && this.value) {
+                //    this.display = this.selectedDisplay
+                //}
 
                 this.results = null
                 this.error = null
                 this.removeEventListener()
                 this.$emit('close', this.display)
+                this.$emit('input', this.value)
             },
 
             /**
@@ -537,8 +618,7 @@
             this.display            = this.initialDisplay
             this.selectedDisplay    = this.initialDisplay
 
-            //this.position = $(this.$el).position();
-            this.position = this.$el.getBoundingClientRect();
+            this.position = $(this.$el).position();
         }
     }
 </script>
@@ -558,7 +638,7 @@
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 3px;
-        /*padding: 0 5px;*/
+        padding: 0 5px;
     }
 
     .sko-aut-searching {
@@ -567,10 +647,10 @@
 
     .sko-aut-inputs {
         flex-grow: 1;
-        padding: 0 5px;
+        padding: 1px 5px;
         input {
             border: none;
-            width: 100%;
+            width: 100% !important;
         }
         input:focus {
             outline: none;
@@ -583,12 +663,12 @@
         border-top: 0px;
         color: black;
         list-style-type: none;
-        margin: 0px;
+        margin: 0px; //8px 0px 0px -6px;
         max-height: 400px;
         overflow-y: auto;
         padding: 0px;
         position: absolute;
-        width: auto;
+        width: 100%; //auto;
         z-index: 1000;
     }
 
@@ -612,7 +692,7 @@
         width: 14px;
     }
     .sko-aut-box .sko-aut-icon.sko-aut-clear {
-        margin-top: -20px;
+        margin-top: -7px;
     }
 
     .sko-aut-animate-spin {
