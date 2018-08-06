@@ -647,7 +647,7 @@
 
     .sko-aut-inputs {
         flex-grow: 1;
-        padding: 1px 5px;
+        padding: 0px 5px;
         input {
             border: none;
             width: 100% !important;
