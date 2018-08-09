@@ -8,10 +8,12 @@
                 , showResults ? 'sko-aut-searching' : ''
             ]"
         >
+
             <span v-if="searchButton">
                 <img v-if="!isLoading" class="sko-aut-icon" src="./assets/search.svg">
                 <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg">
             </span>
+
 
             <div class="sko-aut-inputs">
                 <input
