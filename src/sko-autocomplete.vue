@@ -15,21 +15,25 @@
 
             <div class="sko-aut-inputs">
                 <input
-                    :class          = "[inputClass, {inputDisableClass: disableInput}]"
-                    v-model         = "display"
-                    :type           = "inputType"
-                    :placeholder    = "placeholder"
+                    :class          = "[
+                        inputClass
+                        , disableInput ? inputDisabledClass : ''
+                        , required && !display ? inputRequiredClass : ''
+                    ]"
                     :disabled       = "disableInput"
                     :required       = "required"
+                    :placeholder    = "placeholder"
+                    :type           = "inputType"
+                    @blur           = "blur"
                     @click          = "search"
+                    @focus          = "focus"
                     @input          = "search"
                     @keydown.enter  = "enter"
                     @keydown.tab    = "close"
                     @keydown.up     = "up"
                     @keydown.down   = "down"
                     @keydown.esc    = "close"
-                    @focus          = "focus"
-                    @blur           = "blur"
+                    v-model         = "display"
                 >
                 <input :name="name" type="hidden" :value="value || initialValue">
                 <input :name="nameDisplay" type="hidden" :value="display || initialDisplay">
@@ -136,7 +140,14 @@
             /**
              * CSS class for the input when disabled
              */
-            inputDisableClass: {
+            inputDisabledClass: {
+                type: [String, Object]
+            },
+
+            /**
+             * CSS class for the input when required
+             */
+            inputRequiredClass: {
                 type: [String, Object]
             },
 
@@ -232,7 +243,7 @@
             },
 
             /**
-             * Optional search button
+             * Required
              */
             required: {
                 type: Boolean,
