@@ -14,13 +14,12 @@
                 <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg">
             </span>
 
-
             <div class="sko-aut-inputs">
                 <input
                     :class          = "[
                         inputClass
                         , disableInput ? inputDisabledClass : ''
-                        , required && !display ? inputRequiredClass : ''
+                        , (required && !display) ? inputRequiredClass : ''
                     ]"
                     :disabled       = "disableInput"
                     :required       = "required"
@@ -472,15 +471,17 @@
                 if (!obj) {
                     return
                 }
-                this.value = (this.resultsValue && obj[this.resultsValue]) ? obj[this.resultsValue] : obj.id
-                this.display = this.formatDisplay(obj)
-                this.selectedDisplay = this.display
+                this.value              = (this.resultsValue && obj[this.resultsValue]) ? obj[this.resultsValue] : obj.id
+                this.display            = this.formatDisplay(obj)
+                this.selectedDisplay    = this.display
+
                 this.$emit('input', this.value)
                 this.$emit('selected', {
                     value: this.value,
                     display: this.display,
                     selectedObject: obj
                 })
+
                 this.close()
             },
 
