@@ -1,6 +1,6 @@
 {
   "name": "sko-autocomplete",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Vue2 Autocomplete component",
   "author": "Kirk Olson",
   "license": "MIT",
