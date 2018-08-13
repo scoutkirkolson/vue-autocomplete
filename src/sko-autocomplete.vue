@@ -9,8 +9,12 @@
             ]"
         >
 
-            <span v-if="searchButton">
-                <img v-if="!isLoading" class="sko-aut-icon" src="./assets/search.svg">
+            <span
+                class   = "sko-aut-icon"
+                @click  = "search"
+                v-if    = "searchButton"
+            >
+                <img v-if="!isLoading" src="./assets/search.svg">
                 <img v-else class="sko-aut-icon sko-aut-animate-spin" src="./assets/loading.svg">
             </span>
 
@@ -41,7 +45,11 @@
             </div>
 
             <!-- clearButtonIcon -->
-            <span v-show="clearButton && !disableInput && !isEmpty && !isLoading && !hasError" class="sko-aut-icon sko-aut-clear" @click="clear">
+            <span
+                class   = "sko-aut-icon sko-aut-icon-clear"
+                @click  = "clear"
+                v-show  = "clearButton && !disableInput && !isEmpty && !isLoading && !hasError"
+            >
                 <span v-if="clearButtonIcon" :class="clearButtonIcon"></span>
                 <img v-else src="./assets/close.svg">
             </span>
@@ -652,7 +660,7 @@
 
 <style lang="scss">
     .sko-aut {
-        //position: relative;
+        position: relative;
         width: 100%;
         * {
             box-sizing: border-box;
@@ -660,12 +668,13 @@
     }
 
     .sko-aut-box {
-        display: flex;
         align-items: center;
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 3px;
-        padding: 0 5px;
+        display: flex;
+        padding: 0px;
+        position: relative;
     }
 
     .sko-aut-searching {
@@ -674,7 +683,7 @@
 
     .sko-aut-inputs {
         flex-grow: 1;
-        padding: 0px 5px;
+        padding: 0px 0px 0px 15px;
         input {
             border: none;
             width: 100% !important;
@@ -716,8 +725,19 @@
 
     .sko-aut-icon {
         height: 14px;
+        position: absolute;
+        top: 5px;
         width: 14px;
     }
+    .sko-aut-icon-search {
+        left: 5px;
+    }
+    .sko-aut-icon-clear {
+        right: 5px;
+    }
+
+
+
     .sko-aut-box .sko-aut-icon.sko-aut-clear {
         margin-top: -7px;
     }
