@@ -355,24 +355,28 @@
              * Search wrapper method
              */
             search () {
-                this.selectedIndex = null
+                let searchFunc      = null;
+
+                this.selectedIndex  = null;
                 switch (true) {
                     case typeof this.source === 'string':
                         // No resource search with no input
                         if (!this.display || this.display.length < this.minSearchLength ) {
                             return
                         }
-                        return this.resourceSearch(this.source + this.display)
+                        searchFunc =  debounce(() => this.resourceSearch(this.source + this.display), this.searchDelay)
+                        return searchFunc();
 
                     case typeof this.source === 'function':
                         // No resource search with no input
                         if (!this.display || this.display.length < this.minSearchLength ) {
                             return
                         }
-                        return this.resourceSearch(this.source(this.display, this.sourceparams))
+                        searchFunc =  debounce(() => this.resourceSearch(this.source + this.display), this.searchDelay)
+                        return searchFunc();
 
                     case Array.isArray(this.source):
-                        return this.arrayLikeSearch()
+                        return this.arrayLikeSearch();
 
                     default:
                         throw new TypeError()
@@ -380,10 +384,10 @@
             },
 
             /**
-             * Debounce the typed search query before making http requests
+             * Search http resource
              * @param {String} url
              */
-            resourceSearch: debounce(function (url) {
+            resourceSearch (url) {
                 if (!this.display) {
                     this.results = []
                     return
@@ -391,7 +395,7 @@
                 this.loading = true
                 this.setEventListener()
                 this.request(url)
-            }, this.searchDelay),
+            },
 
             /**
              * Make an http request for results
