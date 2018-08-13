@@ -3,12 +3,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>vue-numeric demo</title>
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
         <style>
           [v-cloak] {
             display: none;
           }
         </style>
+        
   </head>
 
   <body>
@@ -24,11 +26,15 @@
             </h2>
           </div>
         </div>
-      </section> 
+      </section>
+        
+      <section>
+          <sko-autocomplete></sko-autocomplete>
+      </section>
 
     <script src="https://unpkg.com/vue" type="text/javascript"></script>
-    <script src="https://unpkg.com/vue-autocomplete/dist" type="text/javascript"></script>
-
+    <script src="./dist/sko-autocomplete.js"></script>
+        
     <script>
       new Vue({
         el: '#app',
