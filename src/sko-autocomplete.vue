@@ -77,7 +77,9 @@
 
 <script type="text/babel">
     import debounce from 'lodash/debounce'
+
     export default {
+        //PROPS
         props: {
             /**
              * Data source for the results
@@ -95,27 +97,6 @@
              */
             sourceparams: {
                 type: [String, Function, Array, Object],
-            },
-
-            /**
-             * Input placeholder
-             */
-            placeholder: {
-                default: 'Search'
-            },
-
-            /**
-             * Preset starting value
-             */
-            initialValue: {
-                type: [String, Number]
-            },
-
-            /**
-             * Preset starting display value
-             */
-            initialDisplay: {
-                type: String
             },
 
             /**
@@ -161,11 +142,40 @@
             },
 
             /**
+             * Input placeholder
+             */
+            placeholder: {
+                default: 'Search'
+            },
+
+            /**
              * To disable the input
              */
             disableInput: {
                 default : false
                 , type  : Boolean
+            },
+
+            /**
+             * Required
+             */
+            required: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
+             * Preset starting value
+             */
+            initialValue: {
+                type: [String, Number]
+            },
+
+            /**
+             * Preset starting display value
+             */
+            initialDisplay: {
+                type: String
             },
 
             /**
@@ -175,6 +185,7 @@
                 default : false
                 , type  : Boolean
             },
+
             /**
              * name property of the input holding the selected value
              */
@@ -244,19 +255,19 @@
             },
 
             /**
-             * Required
-             */
-            required: {
-                type: Boolean,
-                default: false
-            },
-
-            /**
              * Optional search button
              */
             searchButton: {
                 type: Boolean,
                 default: true
+            },
+
+            /**
+             * search delay before starting new search (in milliseconds)
+             */
+            searchDelay: {
+                type: Number,
+                default: 200
             },
 
             /**
@@ -274,6 +285,8 @@
                 type: String
             }
         },
+
+        //DATA
         data () {
             return {
                 value: null,
@@ -378,7 +391,7 @@
                 this.loading = true
                 this.setEventListener()
                 this.request(url)
-            }, 200),
+            }, this.searchDelay),
 
             /**
              * Make an http request for results
