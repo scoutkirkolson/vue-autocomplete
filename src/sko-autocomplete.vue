@@ -8,9 +8,8 @@
                 , showResults ? 'sko-aut-searching' : ''
             ]"
         >
-
             <span
-                class   = "sko-aut-icon"
+                class   = "sko-aut-icon sko-aut-icon-search"
                 @click  = "search"
                 v-if    = "searchButton"
             >
@@ -39,9 +38,9 @@
                     @keydown.down   = "down"
                     @keydown.esc    = "close"
                     v-model         = "display"
-                >
-                <input :name="name" type="hidden" :value="value || initialValue">
-                <input :name="nameDisplay" type="hidden" :value="display || initialDisplay">
+                />
+                <input :name="name" type="hidden" :value="value || initialValue" />
+                <input :name="nameDisplay" type="hidden" :value="display || initialDisplay" />
             </div>
 
             <!-- clearButtonIcon -->
@@ -683,7 +682,7 @@
 
     .sko-aut-inputs {
         flex-grow: 1;
-        padding: 0px 0px 0px 15px;
+        padding: 0px 0px 0px 25px;
         input {
             border: none;
             width: 100% !important;
