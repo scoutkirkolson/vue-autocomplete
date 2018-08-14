@@ -39,7 +39,8 @@
         require(['./dist/sko-autocomplete.js'], function (skoAutocomplete) {
           //var skoAutocomplete = require(['./dist/sko-autocomplete']).default;
           //var skoAutocomplete = require(['./dist/sko-autocomplete.js']).skoAutocomplete;
-          Vue.component('sko-autocomplete', skoAutocomplete);
+          //Vue.component('sko-autocomplete', skoAutocomplete);
+          Vue.use(skoAutocomplete);  
           var app = new Vue({
             el: '#app',
 
