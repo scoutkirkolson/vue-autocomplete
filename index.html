@@ -13,7 +13,7 @@
         
     <script src="https://unpkg.com/vue" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
-    <script>require(['./dist/sko-autocomplete.js'], function (skoAutocomplete) {console.log(skoAutocomplete);});</script>
+    <script>define(function (require) {var skoAutocomplete = require('./dist/sko-autocomplete.js');});</script>
         
   </head>
 
