@@ -42,7 +42,18 @@ module.exports = {
         hints: false
     },
     devtool: '#eval-source-map'
-}
+};
+
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: 'index.js',
+        libraryTarget: 'umd',
+    }
+};
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map'
