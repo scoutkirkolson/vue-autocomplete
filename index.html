@@ -12,9 +12,7 @@
         </style>
         
     <script src="https://unpkg.com/vue" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
-    <script>define(function (require) {var skoAutocomplete = require('./dist/sko-autocomplete.js');console.log(skoAutocomplete);});</script>
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>       
   </head>
 
   <body>
@@ -37,16 +35,18 @@
       </section>
 
     <script>
-      new Vue({
-        el: '#app',
+        require(['./dist/sko-autocomplete.js'], function (skoAutocomplete) {
+          new Vue({
+            el: '#app',
 
-        data:  {
-        },
-          
-        components: {
-          skoAutocomplete
-        }
-      })
+            data:  {
+            },
+
+            components: {
+              skoAutocomplete
+            }
+          })
+        });        
     </script>
   
   </body>
