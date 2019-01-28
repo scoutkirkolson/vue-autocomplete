@@ -33,21 +33,18 @@ module.exports = {
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
-            , 'assets': path.resolve(__dirname, '../src/assets')
         }
     },
     plugins: [
         new copy([
             {from: path.resolve(__dirname, '../examples/src/index.html'), to: path.resolve(__dirname, '../examples/dist')}
         ])
-    ],
-    mode: 'development'
+    ]
 };
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.mode = 'production'
     module.exports.devtool = '#source-map'
-    // http://vue-loader.vuejs.org/en/workflow/production.html
+
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
