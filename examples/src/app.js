@@ -8,9 +8,9 @@ import App from './App.vue'
 /* *** Use `module` version *** */
 import skoAutocomplete from '../../src/sko-autocomplete.vue'
 
-Vue.use(skoAutocomplete);
+//Vue.use(skoAutocomplete);
 
 new Vue({
-    el: '#app',
-    render: h => h(App)
+    el: '#app'
+    , render: h => h(App)
 });
