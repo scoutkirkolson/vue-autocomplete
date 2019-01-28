@@ -3,6 +3,7 @@ var path                = require('path')
 var webpack             = require('webpack')
 var urloader            = require('url-loader')
 var copy                = require('copy-webpack-plugin');
+var uglify              = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: path.resolve(__dirname, '../examples/src/app.js'),
@@ -53,7 +54,7 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new UglifyJsPlugin({
+        new uglify({
             sourceMap:true
         }),
         new webpack.LoaderOptionsPlugin({
