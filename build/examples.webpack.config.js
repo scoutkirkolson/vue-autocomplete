@@ -1,14 +1,15 @@
-var path = require('path')
-var webpack = require('webpack')
-var urloader = require('url-loader')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// https://github.com/vuejs/vue-cli/blob/master/docs/build.md#configuration-files
+var path                = require('path')
+var webpack             = require('webpack')
+var urloader            = require('url-loader')
+var copy                = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/sko-autocomplete.vue',
+    entry: path.resolve(__dirname, '../examples/src/app.js'),
     output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'sko-autocomplete.js',
+        path: path.resolve(__dirname, '../examples/dist'),
+        publicPath: '/examples/dist/',
+        filename: 'app.js',
         libraryTarget: 'umd',
     },
     module: {
@@ -16,7 +17,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                options: {   
+                options: {
                 }
             },
             {
@@ -34,17 +35,13 @@ module.exports = {
             , 'assets': path.resolve(__dirname, '../src/assets')
         }
     },
-    devServer: {
-        historyApiFallback: true,
-        noInfo: true
-    },
-    performance: {
-        hints: false
-    },
-    devtool: '#eval-source-map',
+    plugins: [
+        new copy([
+            {from: path.resolve(__dirname, '../examples/src/index.html'), to: path.resolve(__dirname, '../examples/dist')}
+        ])
+    ],
     mode: 'development'
 };
-
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.mode = 'production'
