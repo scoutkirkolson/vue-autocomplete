@@ -99,7 +99,7 @@
                             results-display         = "name"
                             results-value           = "id"
                             :show-no-results        = "true"
-                            :source                 = "[{id:'NL',name:'Netherlands'},{id:'BE',name:'Belgium'},{id:'LX',name:'Luxemburg'}]"
+                            :source                 = "[{id:'NL',name:'Netherlands'},{id:'BE',name:'Belgium'},{id:'LX',name:'Luxembourg'}]"
                             style                   = "padding:0px;"
                             v-model                 = "country_id"
                         >
