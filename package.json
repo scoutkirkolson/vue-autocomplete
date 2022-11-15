@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "css-loader": "^1.0.0",
-    "es6lib": "git+ssh://git@github.com/scoutkirkolson/es6lib.git",
+    "es6lib": "github:scoutkirkolson/es6lib",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "moment": "^2.22.0",
