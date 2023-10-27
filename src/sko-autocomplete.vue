@@ -91,6 +91,5 @@
 <script src="./sko-autocomplete.js">
 </script>
 
-<style lang="scss" src="./sko-autocomplete.scss" scoped>
+<style src="./sko-autocomplete.css" scoped>
 </style>
-

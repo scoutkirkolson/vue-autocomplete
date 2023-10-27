@@ -1,7 +1,9 @@
 var path = require('path')
 var webpack = require('webpack')
 var urloader = require('url-loader')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
     entry: './src/sko-autocomplete.vue',
@@ -16,8 +18,12 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                options: {   
+                options: {
                 }
+            },
+            {
+                test: /\.css$/,
+                loader: "css-loader"
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)(\?.*)?$/,
@@ -41,14 +47,12 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map',
-    mode: 'development'
+    mode: 'development',
 };
 
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.mode = 'production'
-    module.exports.devtool = '#source-map'
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
@@ -56,11 +60,16 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
+        new VueLoaderPlugin(),
         new UglifyJsPlugin({
             sourceMap:true
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
         })
+    ])
+} else{
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new VueLoaderPlugin(),
     ])
 }
