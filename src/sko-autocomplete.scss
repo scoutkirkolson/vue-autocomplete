@@ -1,0 +1,75 @@
+.sko-aut {
+   position: relative;
+   width: 100%;
+}
+ .sko-aut * {
+   box-sizing: border-box;
+}
+ .sko-aut-box {
+   align-items: center;
+   background: #fff;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+   display: flex;
+   padding: 0;
+   position: relative;
+}
+ .sko-aut-searching {
+   border-radius: 3px 3px 0 0;
+}
+ .sko-aut-inputs {
+   flex-grow: 1;
+   padding: 0 0 0 25px;
+}
+ .sko-aut-inputs input {
+   border: none;
+   width: 100% !important;
+}
+ .sko-aut-inputs input:focus {
+   outline: none;
+}
+ .sko-aut-results {
+   background: white;
+   border: 1px solid #ccc;
+   border-top: 0;
+   color: black;
+   list-style-type: none;
+   margin: 0;
+   max-height: 400px;
+   overflow-y: auto;
+   padding: 0;
+   position: absolute;
+   width: 100%;
+   z-index: 1000;
+}
+ .sko-aut-results-item-error {
+   color: red;
+}
+ .sko-aut-results-item {
+   padding: 7px 10px;
+   cursor: pointer;
+}
+ .sko-aut-results-item:hover {
+   background: rgba(0, 180, 255, 0.075);
+}
+ .sko-aut-selected {
+   background: rgba(0, 180, 255, 0.15);
+}
+ .sko-aut-icon {
+   height: 14px;
+   position: absolute;
+   top: 3px;
+   width: 14px;
+}
+ .sko-aut-icon-search {
+   left: 5px;
+}
+ .sko-aut-icon-clear {
+   right: 5px;
+}
+ .sko-aut-box .sko-aut-icon.sko-aut-clear {
+   margin-top: -7px;
+}
+ .sko-aut-animate-spin {
+   animation: spin 2s infinite linear;
+}

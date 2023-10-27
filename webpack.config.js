@@ -1,6 +1,8 @@
 var path = require('path')
 var webpack = require('webpack')
 var urloader = require('url-loader')
+var cssloader = require('css-loader')
+var sassloader = require('sass-loader')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -22,8 +24,22 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: "css-loader"
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)(\?.*)?$/,
